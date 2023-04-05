@@ -97,36 +97,13 @@ printf '\n'
 #
 
 #   ACF
-echo "Fetching Advanced Custom Fields plugin...";
-wget --quiet https://downloads.wordpress.org/plugin/advanced-custom-fields.zip;
-unzip -q advanced-custom-fields.zip;
-mv advanced-custom-fields/ wp-content/plugins/
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
+#echo "Fetching Advanced Custom Fields plugin...";
+#wget --quiet https://downloads.wordpress.org/plugin/advanced-custom-fields.zip;
+#unzip -q advanced-custom-fields.zip;
+#mv advanced-custom-fields/ wp-content/plugins/
+#echo "${GREEN}Done! ✅${NC}"
+#printf '\n'
 
-#   ACF for Yoast SEO
-echo "Fetching ACF Content Analysis for Yoast SEO plugin...";
-wget --quiet https://downloads.wordpress.org/plugin/acf-content-analysis-for-yoast-seo.zip;
-unzip -q acf-content-analysis-for-yoast-seo.zip;
-mv acf-content-analysis-for-yoast-seo/ wp-content/plugins/
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
-
-#   Wordfence Security
-echo "Fetching Wordfence Security plugin...";
-wget --quiet https://downloads.wordpress.org/plugin/wordfence.zip;
-unzip -q wordfence.zip;
-mv wordfence/ wp-content/plugins/
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
-
-#   WordPress SEO a.k.a. Yoast
-echo "Fetching WordPress SEO (a.k.a. Yoast) plugin...";
-wget --quiet https://downloads.wordpress.org/plugin/wordpress-seo.zip;
-unzip -q wordpress-seo.zip;
-mv wordpress-seo/ wp-content/plugins/
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
 
 #
 #   Remove default WP plugins
@@ -153,62 +130,7 @@ rm -rf wp-content/themes/twentytwentytwo
 echo "${GREEN}Done! ✅${NC}"
 printf '\n'
 
-#
-#   Install boilerplate theme (packaged with Gulp.js)
-#
-#   https://github.com/jasewarner/gulp-wordpress
-#   ------------------
-#
-theme_slug=$(echo "${theme_name}" | sed -e 's/[^[:alnum:]]/-/g' \
-| tr -s '-' | tr '[:upper:]' '[:lower:]')
 
-echo "Downloading boilerplate theme packaged with Gulp.js..."
-curl -LOk --silent https://github.com/jasewarner/gulp-wordpress/archive/master.zip
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
-
-echo "Decompressing the zip file and moving it to the correct location..."
-unzip -q master.zip
-mv gulp-wordpress-master/ wp-content/themes/"${theme_slug}"
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
-
-echo "Updating the theme details..."
-
-#   remove theme git files
-rm wp-content/themes/"${theme_slug}"/.gitignore
-
-#   style.css
-sed -i "" "s?<Theme_Name>?$theme_name?g" wp-content/themes/"${theme_slug}"/style.css
-sed -i "" "s?<Theme_Author>?$theme_author?g" wp-content/themes/"${theme_slug}"/style.css
-sed -i "" "s?<Theme_Author_URI>?$theme_author_uri?g" wp-content/themes/"${theme_slug}"/style.css
-sed -i "" "s?<Theme_Description>?$theme_description?g" wp-content/themes/"${theme_slug}"/style.css
-sed -i "" "s?<Theme_Text_Domain>?$theme_slug?g" wp-content/themes/"${theme_slug}"/style.css
-
-#   gulp.js
-sed -i "" "s?theme-name?$theme_slug?g" wp-content/themes/"${theme_slug}"/assets/gulpfile.js
-sed -i "" "s?package-name?$theme_slug?g" wp-content/themes/"${theme_slug}"/assets/package.json
-sed -i "" "s?package-description?$theme_description?g" wp-content/themes/"${theme_slug}"/assets/package.json
-sed -i "" "s?author-name?$theme_author?g" wp-content/themes/"${theme_slug}"/assets/package.json
-
-#   wp script handle
-sed -i "" "s?theme-name?$theme_slug?g" wp-content/themes/"${theme_slug}"/functions/func-script.php
-
-#   wp style handle
-sed -i "" "s?theme-name?$theme_slug?g" wp-content/themes/"${theme_slug}"/functions/func-style.php
-
-#   php theme files
-sed -i "" "s?<Author>?$theme_author?g" wp-content/themes/"${theme_slug}"/*.php
-sed -i "" "s?<Package>?$theme_slug?g" wp-content/themes/"${theme_slug}"/*.php
-sed -i "" "s?<Author>?$theme_author?g" wp-content/themes/"${theme_slug}"/functions/*.php
-sed -i "" "s?<Package>?$theme_slug?g" wp-content/themes/"${theme_slug}"/functions/*.php
-
-#   add author admin credit to backend
-sed -i "" "s?http://author.com?$theme_author_uri?g" wp-content/themes/"${theme_slug}"/functions/func-admin.php
-sed -i "" "s?Author Name?$theme_author?g" wp-content/themes/"${theme_slug}"/functions/func-admin.php
-
-echo "${GREEN}Done! ✅${NC}"
-printf '\n'
 
 #
 #   Tidy up
